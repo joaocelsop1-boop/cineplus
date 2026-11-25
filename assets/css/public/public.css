@@ -1,0 +1,118 @@
+.section-0{
+    padding-top: 120px;
+    max-width: 120rem;
+    text-align: center;
+}
+.section-0 h1{
+    max-width: 600px;
+    font-size: 50px;
+    font-weight: 900;
+    text-align: center;
+    margin: auto;
+    color: var(--text-color-white);
+}
+.section-0{
+    padding-bottom: 20px;
+}
+.section-0 p{
+    color: var(--text-color-white);
+    font-size: 20px;
+}
+.section-1 {
+    width: 100%;
+}
+.section-1 h1{
+    font-size: 40px;
+    font-weight: 900;
+    color: var(--text-color-white);
+}
+@media screen and (max-width: 567px){
+    .section-0{
+        padding-top: 120px;
+        max-width: 22rem;
+        margin: auto;
+    }
+    .section-0 h1{
+        font-size: 40px;
+    }
+}
+
+/* ==========================================================================
+   RESTYLE NETFLIX/MINETV (2026-11-25) — secoes da landing publica.
+   ========================================================================== */
+.landing-section{ padding:64px 0; }
+.landing-section h2{
+    text-align:center;
+    font-size:32px;
+    font-weight:700;
+    color:#fff;
+    margin-bottom:8px;
+}
+.landing-section .section-subtitle{
+    text-align:center;
+    color:#b3b3b3;
+    font-size:16px;
+    margin-bottom:40px;
+}
+.steps-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:24px;
+    max-width:960px;
+    margin:0 auto;
+}
+.step-card{
+    background:#1f1f1f;
+    border:1px solid #2c2c2c;
+    border-radius:12px;
+    padding:28px 20px;
+    text-align:center;
+}
+.step-card .step-number{
+    width:48px;
+    height:48px;
+    line-height:48px;
+    border-radius:50%;
+    background:#E50914;
+    color:#fff;
+    font-size:22px;
+    font-weight:700;
+    margin:0 auto 16px auto;
+}
+.step-card h3{ color:#fff; font-size:19px; margin-bottom:8px; }
+.step-card p{ color:#b3b3b3; font-size:15px; margin:0; }
+.devices-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+    gap:16px;
+    max-width:960px;
+    margin:0 auto;
+}
+.device-card{
+    background:#1f1f1f;
+    border:1px solid #2c2c2c;
+    border-radius:12px;
+    padding:24px 12px;
+    text-align:center;
+    color:#fff;
+}
+.device-card i{ font-size:36px; color:#E50914; margin-bottom:12px; }
+.device-card span{ display:block; font-size:15px; }
+.faq-list{ max-width:720px; margin:0 auto; }
+.faq-list details{
+    background:#1f1f1f;
+    border:1px solid #2c2c2c;
+    border-radius:8px;
+    padding:16px 20px;
+    margin-bottom:12px;
+}
+.faq-list summary{
+    cursor:pointer;
+    color:#fff;
+    font-weight:700;
+    font-size:16px;
+    list-style:none;
+}
+.faq-list summary::-webkit-details-marker{ display:none; }
+.faq-list details p{ color:#b3b3b3; margin:12px 0 0 0; font-size:15px; }
+.hero-actions{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:28px; }

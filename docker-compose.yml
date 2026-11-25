@@ -1,0 +1,35 @@
+# StreamFlix — app + MySQL 8.0 (uso no Coolify: app Docker Compose a partir do git)
+# Copie .env.example para .env e preencha as senhas antes de subir.
+services:
+  app:
+    build: .
+    container_name: streamflix
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    environment:
+      DB_HOST: db
+      DB_NAME: ${DB_NAME:-streamflix}
+      DB_USER: ${DB_USER:-streamflix}
+      DB_PASS: ${DB_PASS:-streamflix_senha_trocar}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@streamflix.local}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-trocar_esta_senha}
+      MP_ACCESS_TOKEN: ${MP_ACCESS_TOKEN:-}
+      SITE_URL: ${SITE_URL:-}
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    container_name: streamflix_db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASS:-root_senha_trocar}
+      MYSQL_DATABASE: ${DB_NAME:-streamflix}
+      MYSQL_USER: ${DB_USER:-streamflix}
+      MYSQL_PASSWORD: ${DB_PASS:-streamflix_senha_trocar}
+    volumes:
+      - streamflix_mysql:/var/lib/mysql
+
+volumes:
+  streamflix_mysql:

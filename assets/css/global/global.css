@@ -1,0 +1,236 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+:root{
+    --body-background: #141414; 
+    --scroll-bar-background: #4d4d4d;
+    --navbar-public-background: #141414; 
+    --navbar-perfil-selecionar-background: #141414; 
+    --navbar-user-background: #141414; 
+    --navbar-background: #141414;
+    --navbar-border-color: rgba(255,255,255,0.1);
+    --navbar-list-group-item-color: #b3b3b3;
+    --navbar-list-group-item-hover-color: #fff; 
+
+    --sidebar-background: #1f1f1f;
+    --sidebar-border-color: #2c2c2c;
+    --sidebar-text-color: #b3b3b3;
+    --sidebar-text-hover-color: #fff;
+    --sidebar-list-group-background: #1f1f1f;
+    --sidebar-list-group-hover-background: #2c2c2c;
+    --sidebar-list-group-two-background: rgba(255,255,255,0.04);
+    --sidebar-list-group-two-hover-background: rgba(255,255,255,0.08);
+  
+    --label-color: #b3b3b3;
+    --input-background: #333333;
+    --input-disabled-background: #333333;
+    --input-hover-background: #ffffff00;
+    --input-color: #fff;
+    --input-border: #555555;
+    --input-border-focus: #E50914;
+    --input-placeholder: #8c8c8c;
+    --input-group-disabled-background: #1f1f1f;
+    --input-group-color: #b3b3b3;
+    --input-group-border-hover: #E50914;
+    --input-group-color-hover: #E50914;
+    --input-form-check-background: #333333;
+    --input-form-check-border: #737373;
+    --input-form-check-checked-background: #E50914;
+
+    --list-group-item-background: #1f1f1f;
+    --list-group-item-border: #2c2c2c;
+    --list-group-item-color: #b3b3b3;
+    
+    --datatables-background: #1f1f1f;
+    --datatables-border: #2c2c2c;
+    --datatables-color: #b3b3b3;
+    --datatables-page-link-color: #b3b3b3;
+    --datatables-page-link-active-color: #E50914;
+    --datatables-page-link-border-color: rgba(255,255,255,0.2);
+    --datatables-page-link-background: #1f1f1f;
+
+    --site-border-color-one: rgba(255,255,255,0.1); 
+    --site-border-color-two: #E50914; 
+
+    --btn-one-background: #E50914;
+    --btn-one-hover-background: #f6121d;
+    --btn-one-color: #fff;
+    --btn-one-hover-color: #fff;
+ 
+    --btn-two-background: #ff3333;
+    --btn-two-hover-background: #c52828;
+    --btn-two-color: #fff;
+    --btn-two-hover-color: #fff; 
+
+    --btn-three-background: #0db616;
+    --btn-three-hover-background: #078f0e;
+    --btn-three-color: #fff;
+    --btn-three-hover-color: #fff;
+
+    --btn-four-background: #ff5e00;
+    --btn-four-hover-background: #db5305;
+    --btn-four-color: #fff;
+    --btn-four-hover-color: #fff;
+
+    --btn-five-background: #E50914;
+    --btn-five-hover-background: #f6121d;
+    --btn-five-color: #fff;
+    --btn-five-hover-color: #fff;
+
+    --card-background-one: #1f1f1f;
+    --card-color-one: #fff;
+    --card-user-background: #141414;
+
+    --text-color-white: #fff;
+    --text-green: #46d369; 
+    --text-yellow: #e2af05;
+    --text-red: #E50914;
+    --text-blue: #0071eb;
+    --text-purple: #E50914;
+    --text-color: #b3b3b3;
+    --text-color-hover: #fff;
+
+    --page-opacity-background: #000;
+
+    --footer-nav-item-color: #E50914;
+    --footer-nav-item-hover-color: #f6121d;
+    --footer-copyright-color: #737373;
+
+    --modal-background: #1f1f1f;
+    --modal-border: #2c2c2c;
+
+    --stream-list-border: #2c2c2c;
+
+    --modal-stream-info-img-border: #2c2c2c;
+    --modal-stream-icon-loading-color: #b3b3b3;
+    --modal-stream-img-background: #141414;
+    --modal-stream-list-border: #2c2c2c;
+    --modal-stream-episodio-hover: #2c2c2c;
+    --modal-stream-episodio-thumb-hover: #2c2c2c;
+
+    --modal-player-background: #000;
+    --modal-player-icon-color: #fff;
+
+    --premium-item-background: #1f1f1f;
+    --premium-item-circle-background: #E50914;
+    --premium-item-circle-border: #fff;
+
+    --perfil-selecionar-background: #1f1f1f;
+    --perfil-selecionar-background-hover: #2c2c2c;
+    --perfil-selecionar-color: #fff;
+
+    --accordion-episodios-background: #1f1f1f;
+    --accordion-episodios-item-border: #2c2c2c;
+    --accordion-episodios-item-hover: #2c2c2c;
+
+}
+body{
+    font-family: "Roboto", sans-serif;
+    font-style: normal;
+    background-color: var(--body-background);
+}
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 2px transparent;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+    background: var(--scroll-bar-background);
+    border-radius: 10px;
+}
+h1,h2,h3,h4,h5,h6,p,span,small{
+    color: var(--text-color);
+}
+a{
+    text-decoration: none;
+    color: var(--text-color);
+}
+a:hover{
+   color: var(--text-color-hover);
+   transition: 0.5s;
+}
+
+.cursor-pointer{
+    cursor: pointer;
+}
+.card{
+    background-color: var(--card-background-one);
+}
+.img-ingresso-rounded-200{
+    width: 250px;
+    height: 150px;
+    border-radius: 10px;
+}
+
+.text-green{
+    color: var(--text-green);
+}
+.text-yellow{
+    color: var(--text-yellow);
+}
+.text-red{
+    color: var(--text-red);
+}
+.text-blue{
+    color: var(--text-blue);
+}
+.text-purple{
+    color: var(--text-purple);
+}
+
+.premium-box{
+    display: inline-grid;
+    grid-template-columns: repeat(4,1fr);
+    width: 100%;
+    gap: 20px;
+}
+.premium-item{
+    background-color: var(--premium-item-background);
+    border-radius: 5px;
+}
+.premium-item .top-circle{
+    width: 100px;
+    height: 100px;
+    margin: 20px auto 10px auto;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: var(--premium-item-circle-background);
+    border: 5px solid var(--premium-item-circle-border);
+    padding: 20px;
+}
+.premium-item .top-circle h4{
+    margin-bottom: 0px;
+    font-size: 20px;
+    color: #fff;
+}
+.premium-item .tela{
+    text-align: center;
+    font-weight: 600;
+    color: var(--text-color-white);
+}
+.premium-item .list-group .list-group-item{
+    border-left: none;
+    border-right: none;
+    border-radius: 0px;
+    text-align: center;
+}
+.premium-item .list-group .list-group-item:last-child{
+    border-bottom: none;
+}
+.premium-item .footer{
+    padding: 1rem;
+}
+.premium-item .footer .btn{
+    width: 100%;
+    margin-bottom: 10px;
+} 
+
+.video-js{
+    width: 100%;
+    height: 100%;
+    display: block;
+    aspect-ratio: 16/9;
+}
