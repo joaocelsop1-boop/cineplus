@@ -311,20 +311,11 @@ if ($tipo === 'series') {
 }
 
 if ($tipo === 'live') {
-    $live = stream_get_live($id);
+    // Ao vivo sempre via HLS (.m3u8): o navegador nao toca .ts direto.
+    // A extensao do catalogo (as vezes 'ts') nao pode decidir aqui.
     $ext = 'm3u8';
-    if (!empty($live['data']) && !empty($live['data']->movie_data) && !empty($live['data']->movie_data->container_extension)) {
-        $ext = $live['data']->movie_data->container_extension;
-    }
-    // A URL pode pedir .m3u8 explicitamente; o comportamento segue a extensao.
-    if ($ext_url !== '' && $ext_url !== 'm3u8') {
-        $ext = $ext_url;
-    }
     $url_painel = proxy_montar_url_painel('live', $id . '.' . $ext);
-    if (strtolower($ext) === 'm3u8') {
-        proxy_servir_playlist($url_painel);
-    }
-    proxy_repassar($url_painel, proxy_content_type($ext));
+    proxy_servir_playlist($url_painel);
 }
 
 http_response_code(400);
