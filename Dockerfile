@@ -5,7 +5,7 @@ FROM php:8.2-apache
 # apt-get update com retry: o espelho do Debian falha de vez em quando e
 # derruba o build inteiro. Tenta 3 vezes (com 10s de pausa) antes de desistir.
 RUN apt-get update || (sleep 10 && apt-get update) || (sleep 10 && apt-get update) \
-    && apt-get install -y --no-install-recommends default-mysql-client \
+    && apt-get install -y --no-install-recommends default-mysql-client libcurl4-openssl-dev \
     && docker-php-ext-install pdo_mysql mysqli curl \
     && a2enmod rewrite \
     && rm -rf /var/lib/apt/lists/*
