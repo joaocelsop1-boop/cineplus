@@ -17,7 +17,7 @@ export DB_HOST DB_NAME DB_USER DB_PASS ADMIN_EMAIL ADMIN_PASSWORD
 
 echo "[entrypoint] Aguardando MySQL em ${DB_HOST}..."
 for i in $(seq 1 60); do
-  if MYSQL_PWD="$DB_PASS" mysql -h"$DB_HOST" -u"$DB_USER" -e "SELECT 1" "$DB_NAME" >/dev/null 2>&1; then
+  if MYSQL_PWD="$DB_PASS" mysql --ssl-mode=DISABLED -h"$DB_HOST" -u"$DB_USER" -e "SELECT 1" "$DB_NAME" >/dev/null 2>&1; then
     echo "[entrypoint] MySQL OK."
     break
   fi
@@ -29,10 +29,10 @@ for i in $(seq 1 60); do
 done
 
 # Importar o seed so se o banco estiver vazio (sem tabelas).
-TABELAS=$(MYSQL_PWD="$DB_PASS" mysql -h"$DB_HOST" -u"$DB_USER" -N -e "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema='$DB_NAME';")
+TABELAS=$(MYSQL_PWD="$DB_PASS" mysql --ssl-mode=DISABLED -h"$DB_HOST" -u"$DB_USER" -N -e "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema='$DB_NAME';")
 if [ "$TABELAS" -eq 0 ]; then
   echo "[entrypoint] Banco vazio: importando banco de dados.sql..."
-  MYSQL_PWD="$DB_PASS" mysql -h"$DB_HOST" -u"$DB_USER" "$DB_NAME" < "/var/www/html/banco de dados.sql"
+  MYSQL_PWD="$DB_PASS" mysql --ssl-mode=DISABLED -h"$DB_HOST" -u"$DB_USER" "$DB_NAME" < "/var/www/html/banco de dados.sql"
   echo "[entrypoint] Seed importado."
 else
   echo "[entrypoint] Banco ja tem $TABELAS tabelas, pulando o seed."
