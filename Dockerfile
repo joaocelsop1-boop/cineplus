@@ -16,6 +16,7 @@ RUN sed -i 's/AllowOverride None/AllowOverride All/g' /etc/apache2/apache2.conf
 COPY . /var/www/html/
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html \
+    && mkdir -p /var/www/html/cache /var/www/html/assets/images/system \
     && chmod 775 /var/www/html/cache /var/www/html/assets/images/system \
     && chmod +x /var/www/html/docker-entrypoint.sh
 
