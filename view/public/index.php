@@ -12,6 +12,10 @@
     <link rel="stylesheet" href="<?php echo BASE_PLUGINS;?>bootstrap/css/bootstrap.css?site_cache=<?php echo SITE_CACHE;?>"/>
     <link rel="stylesheet" href="<?php echo BASE_PLUGINS;?>fontawesome/css/all.css?site_cache=<?php echo SITE_CACHE;?>"/>
     <link rel="stylesheet" href="<?php echo BASE_PLUGINS;?>splide/splide.min.css?site_cache=<?php echo SITE_CACHE;?>"/>
+    <!-- Fonte pixel estilo MineTV (titulos) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <!-- PLUGINS --> 
     <!-- CSS --> 
     <link rel="stylesheet" href="<?php echo BASE_CSS;?>global/global.css?site_cache=<?php echo SITE_CACHE;?>"/>
@@ -26,7 +30,7 @@
 <nav class="navbar navbar-one navbar-public fixed-top m-0">
   <div class="container">
     <div class="items">
-        <a href="<?php echo BASE_PUBLIC;?>"><img src="<?php echo BASE_IMAGES_URL.'system/'.SITE_LOGO;?>"></a>
+        <a href="<?php echo BASE_PUBLIC;?>" class="site-logo-text">Stream<span>Flix</span></a>
         <ul class="list-group list-group-horizontal">
           <a href="<?php echo BASE_USER;?>login" class="list-group-item pe-3 fw-bold"><i class="fas fa-user-shield me-1"></i>Login</a>
           <a href="<?php echo BASE_USER;?>cadastro" class="list-group-item pe-0 fw-bold"><i class="fas fa-user-plus me-1"></i>Cadastro</a>

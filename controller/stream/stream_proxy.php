@@ -46,6 +46,21 @@ function proxy_content_type($ext) {
         'webm' => 'video/webm',
         'm3u8' => 'application/vnd.apple.mpegurl',
         'ts'   => 'video/MP2T',
+        'mp2t' => 'video/MP2T',
+        'm2ts' => 'video/MP2T',
+        'mpg'  => 'video/mpeg',
+        'mpeg' => 'video/mpeg',
+        'vob'  => 'video/mpeg',
+        'flv'  => 'video/x-flv',
+        'wmv'  => 'video/x-ms-wmv',
+        'asf'  => 'video/x-ms-asf',
+        '3gp'  => 'video/3gpp',
+        'm4v'  => 'video/x-m4v',
+        'f4v'  => 'video/mp4',
+        'rm'   => 'application/vnd.rn-realmedia',
+        'rmvb' => 'application/vnd.rn-realmedia',
+        'divx' => 'video/divx',
+        'ogv'  => 'video/ogg',
     );
     return isset($map[$ext]) ? $map[$ext] : 'application/octet-stream';
 }
@@ -272,11 +287,16 @@ if (!in_array($tipo, array('movie', 'series', 'live'), true) || $id <= 0) {
 
 if ($tipo === 'movie') {
     $movie = stream_get_movie($id);
-    if (empty($movie['data']) || empty($movie['data']->movie_data)) {
-        http_response_code(404);
-        die('Filme nao encontrado.');
+    if (!empty($movie['data']) && !empty($movie['data']->movie_data) && !empty($movie['data']->movie_data->container_extension)) {
+        $ext = $movie['data']->movie_data->container_extension;
+    } elseif ($ext_url !== '') {
+        // O cache/painel nao devolveram a extensao: tenta com a extensao da
+        // propria URL em vez de dar 404 direto; o painel devolve 404 se o
+        // arquivo nao existir.
+        $ext = $ext_url;
+    } else {
+        $ext = 'mp4';
     }
-    $ext = !empty($movie['data']->movie_data->container_extension) ? $movie['data']->movie_data->container_extension : 'mp4';
     proxy_repassar(proxy_montar_url_painel('movie', $id . '.' . $ext), proxy_content_type($ext));
 }
 
@@ -291,20 +311,11 @@ if ($tipo === 'series') {
 }
 
 if ($tipo === 'live') {
-    $live = stream_get_live($id);
+    // Ao vivo sempre via HLS (.m3u8): o navegador nao toca .ts direto.
+    // A extensao do catalogo (as vezes 'ts') nao pode decidir aqui.
     $ext = 'm3u8';
-    if (!empty($live['data']) && !empty($live['data']->movie_data) && !empty($live['data']->movie_data->container_extension)) {
-        $ext = $live['data']->movie_data->container_extension;
-    }
-    // A URL pode pedir .m3u8 explicitamente; o comportamento segue a extensao.
-    if ($ext_url !== '' && $ext_url !== 'm3u8') {
-        $ext = $ext_url;
-    }
     $url_painel = proxy_montar_url_painel('live', $id . '.' . $ext);
-    if (strtolower($ext) === 'm3u8') {
-        proxy_servir_playlist($url_painel);
-    }
-    proxy_repassar($url_painel, proxy_content_type($ext));
+    proxy_servir_playlist($url_painel);
 }
 
 http_response_code(400);

@@ -12,24 +12,27 @@ function stream_get_from_server($parametro, $servidor=array()){
         $servidor_iptv_url = SERVIDOR_IPTV_URL;
     }
 
-    $ch = curl_init();   
-    
+    // Uma so requisicao (antes o curl_exec era chamado 2 vezes) e com
+    // timeout: sem isso o painel lento travava o salvamento do servidor e
+    // o carregamento do player.
+    $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $servidor_iptv_url.$parametro);
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 25);
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
     curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-    if(curl_exec($ch) === false) {
+    $body = curl_exec($ch);
+    curl_close($ch);
+    if($body === false) {
         return $error;
     }
-    try{
-        $result = json_decode(curl_exec($ch));
-        return $result; 
-    }catch(Exception $e){
+    $result = json_decode($body);
+    if($result === null){
         return $error;
     }
-
-    return $error;
+    return $result;
 }
  
 function stream_cache_criar($servidor=array()){
@@ -346,67 +349,96 @@ function stream_categorie_title($title){
 }
 
 function stream_get_movie($id){
-     
-    $ch = curl_init();   
+    // 1) Cache primeiro: o catalogo (get_vod_streams) ja traz stream_id e
+    // container_extension. Antes, cada play fazia um get_vod_info AO VIVO no
+    // painel; quando essa chamada falhava ou demorava, o proxy devolvia 404
+    // e o player mostrava "The media could not be loaded".
+    global $stream_cache_get;
+    if(!empty($stream_cache_get) && !empty($stream_cache_get->movie)){
+        foreach((array)$stream_cache_get->movie as $item){
+            if(isset($item->stream_id) && (int)$item->stream_id === (int)$id){
+                $ext = !empty($item->container_extension) ? $item->container_extension : 'mp4';
+                $movie_data = (object)array('container_extension' => $ext, 'stream_id' => (int)$id);
+                return array("status" => "ok", "data" => (object)array("movie_data" => $movie_data));
+            }
+        }
+    }
+    // 2) Fallback: get_vod_info ao vivo, com timeout e uma so requisicao.
+    $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, SERVIDOR_IPTV_URL.'get_vod_info&vod_id='.$id);
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 20);
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
     curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-    if(curl_exec($ch) === false) {
+    $body = curl_exec($ch);
+    curl_close($ch);
+    if($body === false) {
         return array("status" => "error");
     }
-    try{
-        $result = json_decode(curl_exec($ch));
-        $data   = array("status" => "ok", "data" => $result);
-        return $data;
-    }catch(Exception $e){
+    $result = json_decode($body);
+    if($result === null){
         return array("status" => "error");
     }
-
+    return array("status" => "ok", "data" => $result);
 }    
 
 function stream_get_live($id){
-
-    $ch = curl_init();   
+    // Mesmo motivo do filme: o get_vod_info nao serve para ao vivo e a
+    // chamada ao vivo derrubava o play. O cache (get_live_streams) ja tem
+    // stream_id e container_extension do canal.
+    global $stream_cache_get;
+    if(!empty($stream_cache_get) && !empty($stream_cache_get->live)){
+        foreach((array)$stream_cache_get->live as $item){
+            if(isset($item->stream_id) && (int)$item->stream_id === (int)$id){
+                $ext = !empty($item->container_extension) ? $item->container_extension : 'm3u8';
+                $movie_data = (object)array('container_extension' => $ext, 'stream_id' => (int)$id);
+                return array("status" => "ok", "data" => (object)array("movie_data" => $movie_data));
+            }
+        }
+    }
+    // Fallback: get_vod_info ao vivo (o painel nao tem get_live_info).
+    $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, SERVIDOR_IPTV_URL.'get_vod_info&vod_id='.$id);
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 20);
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
     curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-    if(curl_exec($ch) === false) {
+    $body = curl_exec($ch);
+    curl_close($ch);
+    if($body === false) {
         return array("status" => "error");
     }
-    try{
-        $result = json_decode(curl_exec($ch));
-        $data   = array("status" => "ok", "data" => $result);
-        return $data;
-    }catch(Exception $e){
+    $result = json_decode($body);
+    if($result === null){
         return array("status" => "error");
     }
-
+    return array("status" => "ok", "data" => $result);
 }    
 
 function stream_get_serie($id){
-
-    $ch = curl_init();   
+    // Uma so requisicao e com timeout (antes eram duas e sem timeout).
+    $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, SERVIDOR_IPTV_URL.'get_series_info&series_id='.$id);
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 20);
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
     curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-    if(curl_exec($ch) === false) {
+    $body = curl_exec($ch);
+    curl_close($ch);
+    if($body === false) {
         return array("status" => "error", "data" => array());
     }
-    try{
-        $result = json_decode(curl_exec($ch));
-        $data   = array("status" => "ok", "data" => $result);
-        return $data;
-    }catch(Exception $e){
+    $result = json_decode($body);
+    if($result === null){
         return array("status" => "error", "data" => array());
     }
-
-
+    return array("status" => "ok", "data" => $result);
 }
 
 function stream_get_serie_episodios($id){

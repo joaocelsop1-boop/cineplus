@@ -22,13 +22,14 @@ RewriteRule ^stream/([a-z]+)/categoria/([0-9]+)/pagina/([0-9]+)[/]{0,1}$     /vi
 
 #stream proxy https (controller/stream/stream_proxy.php) - o video passa pelo
 #proprio site em HTTPS, sem expor usuario/senha do painel no navegador
-RewriteRule ^stream/proxy/(movie|series|live)/([0-9]+)(/([0-9]+))?\.(mp4|mkv|avi|mov|webm|m3u8)[/]{0,1}$    /controller/stream/stream_proxy.php?stream_type=$1&stream_id=$2&episodio=$4&ext=$5 [QSA,L]
+RewriteRule ^stream/proxy/(movie|series|live)/([0-9]+)(/([0-9]+))?\.(mp4|mkv|avi|mov|webm|m3u8|ts|mpg|mpeg|mp2t|m2ts|flv|wmv|3gp|m4v|f4v|vob|asf|rm|rmvb|divx|ogv)[/]{0,1}$    /controller/stream/stream_proxy.php?stream_type=$1&stream_id=$2&episodio=$4&ext=$5 [QSA,L]
 RewriteRule ^stream/proxy/(ts|pl)/([a-z]+)/(.+)$    /controller/stream/stream_proxy.php?proxy_kind=$1&stream_type=$2&path=$3 [QSA,L]
 
 #stream biblioteca (minha lista, historico, adulto)
 RewriteRule ^stream/minha-lista[/]{0,1}$    /view/stream/minha_lista.php [QSA,L]
 RewriteRule ^stream/historico[/]{0,1}$      /view/stream/historico.php [QSA,L]
 RewriteRule ^stream/adulto[/]{0,1}$         /view/stream/adulto.php [QSA,L]
+RewriteRule ^stream/indique-e-ganhe[/]{0,1}$ /view/stream/indique.php [QSA,L]
 RewriteRule ^stream/movie/([0-9]+)[/]{0,1}$                          /view/stream/stream_play.php?stream_type=movie&stream_id=$1 [QSA,L]
 RewriteRule ^stream/series/([0-9]+)/([0-9]+)[/]{0,1}$                /view/stream/stream_play.php?stream_type=series&stream_id=$1&episodio=$2 [QSA,L]
 RewriteRule ^stream/live/([0-9]+)[/]{0,1}$                           /view/stream/stream_play.php?stream_type=live&stream_id=$1 [QSA,L]

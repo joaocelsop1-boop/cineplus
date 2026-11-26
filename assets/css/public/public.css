@@ -5,8 +5,10 @@
 }
 .section-0 h1{
     max-width: 600px;
-    font-size: 50px;
-    font-weight: 900;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 28px;
+    line-height: 1.6;
+    font-weight: 400;
     text-align: center;
     margin: auto;
     color: var(--text-color-white);
@@ -20,10 +22,15 @@
 }
 .section-1 {
     width: 100%;
+    background: #141414;
+    padding: 40px 24px 48px 24px;
+    border-radius: 12px;
 }
 .section-1 h1{
-    font-size: 40px;
-    font-weight: 900;
+    font-family: 'Press Start 2P', monospace;
+    font-size: 24px;
+    line-height: 1.6;
+    font-weight: 400;
     color: var(--text-color-white);
 }
 @media screen and (max-width: 567px){
@@ -33,18 +40,26 @@
         margin: auto;
     }
     .section-0 h1{
-        font-size: 40px;
+        font-size: 20px;
+    }
+    .section-1 h1{
+        font-size: 18px;
+    }
+    .landing-section h2{
+        font-size: 16px;
     }
 }
 
 /* ==========================================================================
    RESTYLE NETFLIX/MINETV (2026-11-25) — secoes da landing publica.
    ========================================================================== */
-.landing-section{ padding:64px 0; }
+.landing-section{ padding:64px 24px; background:#141414; border-radius:12px; margin-bottom:24px; }
 .landing-section h2{
     text-align:center;
-    font-size:32px;
-    font-weight:700;
+    font-family:'Press Start 2P', monospace;
+    font-size:20px;
+    line-height:1.6;
+    font-weight:400;
     color:#fff;
     margin-bottom:8px;
 }
@@ -116,3 +131,78 @@
 .faq-list summary::-webkit-details-marker{ display:none; }
 .faq-list details p{ color:#b3b3b3; margin:12px 0 0 0; font-size:15px; }
 .hero-actions{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:28px; }
+
+/* ==========================================================================
+   FIXES LANDING 2026-11-25 — logo em texto, botoes do hero, planos, selo,
+   fundo das secoes e fonte pixel estilo MineTV (Press Start 2P).
+   ========================================================================== */
+
+/* 1. Logo em texto (substitui a imagem padrao "SUA LOGO") */
+.site-logo-text{
+    font-family: 'Press Start 2P', monospace;
+    font-size: 20px;
+    color: #fff;
+    text-decoration: none;
+    letter-spacing: 1px;
+    white-space: nowrap;
+}
+.site-logo-text span{ color: #E50914; }
+.site-logo-text:hover{ color: #fff; }
+
+/* 2. CTAs do hero: botoes vermelhos preenchidos */
+.btn-hero{
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    background: #E50914;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+}
+.btn-hero-red{ background: #E50914; color: #fff; }
+.btn-hero-red:hover{ background: #f6121d; color: #fff; }
+.btn-hero-gray{ background: #E50914; color: #fff; }
+.btn-hero-gray:hover{ background: #f6121d; color: #fff; }
+
+/* 3/5. Planos: cartoes com a mesma altura e botoes alinhados embaixo */
+.premium_home .splide__list{ align-items: stretch; }
+.premium_home .splide__slide{ display: flex; }
+.premium-item{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.premium-item.recomendado{ border: 2px solid #E50914; }
+.premium-item .footer{ margin-top: auto; }
+
+/* 4. Nome do plano centralizado, com folga e fonte pixel */
+.premium-item .plano-nome{
+    font-family: 'Press Start 2P', monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    font-weight: 400;
+    color: #fff;
+    text-align: center;
+    padding: 10px 16px 0 16px;
+    margin: 8px 0 0 0;
+}
+
+/* 6. Selo RECOMENDADO dentro do cartao, centralizado (sem corte) */
+.premium-badge{
+    display: block;
+    width: max-content;
+    margin: 14px auto 0 auto;
+    background: #E50914;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 4px 14px;
+    border-radius: 4px;
+    white-space: nowrap;
+}

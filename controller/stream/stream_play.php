@@ -62,8 +62,9 @@ if(isset($_POST['acao'])){
 
     if($_POST['acao'] == 'live_play'){
 
-        $live                   = stream_get_live($_POST['stream_id']);
-        $container_extension    = !empty($live['data']->movie_data->container_extension) ? $live['data']->movie_data->container_extension : 'm3u8';
+        // Ao vivo sempre via HLS (.m3u8): o navegador nao toca .ts direto.
+        // A extensao do catalogo (as vezes 'ts') nao pode ser usada aqui.
+        $container_extension    = 'm3u8';
         
         $url_direta = SERVIDOR_IPTV_HOST.'live/'.SERVIDOR_IPTV_USUARIO.'/'.SERVIDOR_IPTV_SENHA.'/'.$_POST['stream_id'].'.'.$container_extension;
         $url = stream_player_url('live', $_POST['stream_id'], 0, $container_extension, $url_direta);
